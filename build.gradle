@@ -1,0 +1,70 @@
+plugins {
+    id 'java'
+    id 'groovy'
+}
+
+group 'com.sotnim'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+test {
+    useJUnitPlatform()
+}
+
+ext {
+    springBootVersion = '3.0.2'
+    lombokVersion = '1.18.26'
+    spockVersion = '2.4-M1-groovy-4.0'
+}
+
+configurations {
+    testIntegrationImplementation.extendsFrom testImplementation
+    testIntegrationRuntime.extendsFrom testRuntime
+}
+
+sourceSets {
+    testIntegration {
+        groovy.srcDir "$projectDir/src/testIntegration/groovy"
+        resources.srcDir "$projectDir/src/testIntegration/resources"
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
+    }
+}
+
+task testIntegration(type: Test) {
+    testClassesDirs = sourceSets.testIntegration.output.classesDirs
+    classpath = sourceSets.testIntegration.runtimeClasspath
+}
+
+check.dependsOn testIntegration
+
+testIntegration {
+    useJUnitPlatform()
+}
+
+dependencies {
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.2'
+    implementation 'org.liquibase:liquibase-core:4.19.0'
+    implementation 'org.hibernate.orm:hibernate-envers:6.1.6.Final'
+
+    runtimeOnly 'com.h2database:h2:2.1.214'
+
+    testImplementation "org.spockframework:spock-core:$spockVersion"
+    testImplementation 'org.apache.groovy:groovy-all:4.0.8'
+    testImplementation 'org.objenesis:objenesis:3.3'
+
+    testIntegrationImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+    testIntegrationImplementation "org.spockframework:spock-spring:$spockVersion"
+}

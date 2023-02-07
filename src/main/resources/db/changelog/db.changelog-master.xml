@@ -1,0 +1,112 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="1-locations-table" author="maksims.venediktovs">
+
+        <createTable tableName="locations" schemaName="public">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ip_address" type="varchar(16)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="latitude" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="longitude" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="entity_created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="entity_updated" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="entity_version" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createSequence sequenceName="locations_seq" schemaName="public"/>
+
+        <createTable tableName="locations_aud" schemaName="public">
+            <column name="rev" type="bigint"/>
+            <column name="revtype" type="bigint"/>
+            <column name="id" type="bigint"/>
+            <column name="ip_address" type="varchar(16)"/>
+            <column name="latitude" type="double"/>
+            <column name="longitude" type="double"/>
+        </createTable>
+
+        <createTable tableName="revinfo">
+            <column name="rev" type="integer" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="revtstmp" type="bigint"/>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="2-weather-conditions-table" author="maksims.venediktovs">
+
+        <createTable tableName="weather_conditions" schemaName="public">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="latitude" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="longitude" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="temperature" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="wind_speed" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="wind_direction" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="weather_code" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="entity_created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="entity_updated" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="entity_version" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createSequence sequenceName="weather_conditions_seq" schemaName="public"/>
+        <addUniqueConstraint
+                columnNames="latitude, longitude"
+                constraintName="latitudeLongitude_weatherConditions_uk"
+                tableName="weather_conditions"
+        />
+
+        <createTable tableName="weather_conditions_aud" schemaName="public">
+            <column name="rev" type="bigint"/>
+            <column name="revtype" type="bigint"/>
+            <column name="id" type="bigint"/>
+            <column name="latitude" type="double"/>
+            <column name="longitude" type="double"/>
+            <column name="time" type="datetime"/>
+            <column name="temperature" type="double"/>
+            <column name="wind_speed" type="double"/>
+            <column name="wind_direction" type="double"/>
+            <column name="weather_code" type="int"/>
+        </createTable>
+
+    </changeSet>
+
+</databaseChangeLog>
