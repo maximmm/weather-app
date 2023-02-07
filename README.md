@@ -1,7 +1,7 @@
 # weather-app
 #### 
 
-# Get weather data endpoint
+### Get weather data endpoint
 
 GET http://localhost:8080/weather
 or
