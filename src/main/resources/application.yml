@@ -13,4 +13,4 @@ spring:
   caching:
     eviction:
       cron:
-        weather-conditions: 0 * * * * *
+        weather-conditions: 0 0 * * * *
