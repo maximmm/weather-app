@@ -1,5 +1,4 @@
 # weather-app
-#### 
 
 ### Get weather data endpoint
 

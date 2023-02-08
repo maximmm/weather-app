@@ -60,7 +60,7 @@ dependencies {
     implementation 'org.liquibase:liquibase-core:4.19.0'
     implementation 'org.hibernate.orm:hibernate-envers:6.1.6.Final'
 
-    runtimeOnly 'com.h2database:h2:2.1.214'
+    implementation 'com.h2database:h2:2.1.214'
 
     testImplementation "org.spockframework:spock-core:$spockVersion"
     testImplementation 'org.apache.groovy:groovy-all:4.0.8'
